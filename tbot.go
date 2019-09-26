@@ -45,7 +45,6 @@ func OnMessage(bot *tgbotapi.BotAPI, message *tgbotapi.Message) {
 
   var msg tgbotapi.Chattable
   var sendMessage string
-  //var sendType string = "text"
 
   userName := message.From.UserName
   chatID   := message.Chat.ID
@@ -54,9 +53,7 @@ func OnMessage(bot *tgbotapi.BotAPI, message *tgbotapi.Message) {
   spew.Dump(message) // выводим то что пришло (Для отладки!!!)
 
   if message.IsCommand() {
-    command := message.Command()
-
-    switch command {
+    switch message.Command() {
       case "start" :
         sendMessage = "Добро пожаловать, " + message.Chat.FirstName + " " + message.Chat.LastName + "!"
         msg = tgbotapi.NewMessage(chatID, sendMessage)
