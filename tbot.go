@@ -8,7 +8,7 @@ import (
 )
 
 const (
-  TOKEN string = "909673712:AAEQ7YZdxJRoPhz90rPucxOPGTPTFCL6wf0"
+  TOKEN string = ""
   DEBUG bool   = false
   TIMEOUT int  = 60
 )
