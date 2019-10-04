@@ -1,46 +1,53 @@
 package main
 
 import (
-  "fmt"
-  "net/http"
-  "html/template"
+	"fmt"
+	"html/template"
+	"net/http"
 )
 
-const templateURL = "templates/"
+const TEMPLATES_FOLDER = "templates/"
 
 type ViewData struct {
-  Title string
-  Users []User
+	Title string
+	Users []User
 }
 
 type User struct {
-  Name string
-  Age int
+	Name string
+	Age  int
 }
 
 func main() {
-  data := ViewData {
-    Title : "Users List",
-    Users : []User {
-      User {Name: "Tom", Age: 21},
-      User {Name: "Kate", Age: 23},
-      User {Name: "Alice", Age: 25},
-    },
-  }
+	printPage("/test/", "main", ViewData{
+		Title: "Users List",
+		Users: []User{
+			User{Name: "Tom", Age: 21},
+			User{Name: "Kate", Age: 23},
+			User{Name: "Alice", Age: 25},
+		},
+	})
 
-  tmplParse("/", "main", data)
+	printPage("/test2/", "main", ViewData{
+		Title: "Users List 2",
+		Users: []User{
+			User{Name: "Tom", Age: 21},
+			User{Name: "Kate", Age: 23},
+			User{Name: "Alice", Age: 25},
+		},
+	})
 
-  fmt.Println("Server is listening...")
-  http.ListenAndServe(":8080", nil)
+	fmt.Println("Server is listening...")
+	http.ListenAndServe(":8080", nil)
 }
 
-func templateFn(page string) string {
-  return templateURL + page + "/index.html"
+func pageTemplate(page string) string {
+	return TEMPLATES_FOLDER + page + "/index.html"
 }
 
-func tmplParse(url string, page string, data ViewData) {
-  http.HandleFunc(url, func(w http.ResponseWriter, r *http.Request) {
-    tmpl, _ := template.ParseFiles(templateFn(page))
-    tmpl.Execute(w, data)
-  })
+func printPage(url string, page string, data ViewData) {
+	http.HandleFunc(url, func(w http.ResponseWriter, r *http.Request) {
+		tmpl, _ := template.ParseFiles(pageTemplate(page))
+		tmpl.Execute(w, data)
+	})
 }
