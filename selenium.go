@@ -1,4 +1,3 @@
-// Run some code on play.golang.org and display the result
 package main
 
 import (
@@ -9,34 +8,31 @@ import (
 	"github.com/tebeka/selenium"
 )
 
-var code = "golang"
-
-// Errors are ignored for brevity.
-
 func main() {
-	// FireFox driver without specific version
+	// FireFox драйвер без указания версии
 	caps := selenium.Capabilities{"browserName": "firefox"}
 
 	wd, _ := selenium.NewRemote(caps, "")
 	defer wd.Quit()
 
-	// Get simple playground interface
+	// Открываем страницу
 	_ = wd.Get("https://google.ru/")
 
-	// Enter code in textarea
+	// Находим поле и вводим текст
 	elem, _ := wd.FindElement(selenium.ByCSSSelector, ".gLFyf.gsfi")
 	_ = elem.Clear()
-	_ = elem.SendKeys(code)
+	_ = elem.SendKeys("golang")
 
 	time.Sleep(time.Millisecond * 10)
 
-	// Click the run button
+	// Находим кнопку и кликаем по ней
 	btn, _ := wd.FindElement(selenium.ByCSSSelector, ".FPdoLc.VlcLAe .gNO89b")
 	_ = btn.Click()
 
-	// Get the result
+	// Делаем скрин результата
 	screen, _ := wd.Screenshot()
 
+	// Записываем результат в файл
 	file, err := os.Create("test.png")
 	if err != nil {
 		fmt.Println("Unable to create file:", err)
