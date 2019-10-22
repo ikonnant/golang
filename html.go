@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-const TEMPLATES_FOLDER = "templates/"
+const TemplatesFolder = "templates/"
 
 type ViewData struct {
 	Title string
@@ -38,16 +38,16 @@ func main() {
 	})
 
 	fmt.Println("Server is listening...")
-	http.ListenAndServe(":8080", nil)
+	_ = http.ListenAndServe(":8080", nil)
 }
 
 func pageTemplate(page string) string {
-	return TEMPLATES_FOLDER + page + "/index.html"
+	return TemplatesFolder + page + "/index.html"
 }
 
 func printPage(url string, page string, data ViewData) {
 	http.HandleFunc(url, func(w http.ResponseWriter, r *http.Request) {
 		tmpl, _ := template.ParseFiles(pageTemplate(page))
-		tmpl.Execute(w, data)
+		_ = tmpl.Execute(w, data)
 	})
 }
