@@ -26,7 +26,7 @@ func main() {
 	time.Sleep(time.Millisecond * 10)
 
 	// Находим кнопку и кликаем по ней
-	btn, _ := wd.FindElement(selenium.ByCSSSelector, ".FPdoLc.VlcLAe .gNO89b")
+	btn, _ := wd.FindElement(selenium.ByCSSSelector, ".aajZCb .gNO89b")
 	_ = btn.Click()
 
 	// Делаем скрин результата
